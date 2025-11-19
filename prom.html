@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PROM Salesforce</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+
+            /* Single solid blue color */
+            background: #b7d7ff;
+
+            color: #032d60;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .message {
+            font-size: 2rem;
+            font-weight: 600;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            z-index: 1;
+        }
+
+        /* Ensure bot widget appears above card */
+        #embeddedServiceHelpButton {
+            z-index: 9999;
+        }
+    </style>
+
+    <!-- Einstein Bot CSS customization -->
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+            background-color: #005290;
+            font-family: "Arial", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+            outline: 1px solid #005290;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="message">
+    Hello from PROM Salesforce 👻
+</div>
+
+<!-- Einstein Bot Script -->
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true;
+        embedded_svc.settings.language = '';
+
+        // Use Live Agent feature
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+
+        // Reference your public "Service Not Available" page
+        embedded_svc.settings.offlineSupportMinimizedText = 'Sorry, the chat service is offline.';
+        embedded_svc.settings.offlineSupportPageURL = '/resource/BotOfflinePage/offline.html'; // Static Resource path
+
+        embedded_svc.init(
+            'https://brave-narwhal-1gt1xs-dev-ed.trailblaze.my.salesforce.com',
+            'https://brave-narwhal-1gt1xs-dev-ed.trailblaze.my.salesforce-sites.com/liveAgentSetupFlow',
+            gslbBaseURL,
+            '00DdM00000hSL5Z',
+            'BotEnabledGroup',
+            {
+                baseLiveAgentContentURL: 'https://c.la11-core1.sfdc-y37hzm.salesforceliveagent.com/content',
+                deploymentId: '572dM00000ThPSH',
+                buttonId: '573dM000005o8HF',
+                baseLiveAgentURL: 'https://d.la11-core1.sfdc-y37hzm.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'BotEnabledGroup',
+                isOfflineSupportEnabled: true // Turn on offline support
+            }
+        );
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://brave-narwhal-1gt1xs-dev-ed.trailblaze.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+</script>
+
+</body>
+</html>
